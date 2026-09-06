@@ -98,6 +98,8 @@ function normOption(s) {
     .toLowerCase()
     .replace(/^\s*[a-d]\s*[.):]\s*/, '')
     .replace(/^option\s*[a-d]\s*[):]?\s*/i, '')
+    .replace(/["'`«»“”‘’'-]/g, ' ')
+    .replace(/[.,:;!?]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }

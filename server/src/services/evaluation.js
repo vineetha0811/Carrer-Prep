@@ -2,7 +2,15 @@ import { aiEnabled, callAI, askAI } from './ai.js';
 
 // Cleanup text for comparison
 function normalize(s = '') {
-  return s.toLowerCase().replace(/\s+/g, ' ').replace(/^[a-d][.)]/i, '').replace(/^option\s*[a-d]\s*[):]?\s*/i, '').trim();
+  return String(s || '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/^[a-d][.)]/i, '')
+    .replace(/^option\s*[a-d]\s*[):]?\s*/i, '')
+    .replace(/["'`«»“”‘’'-]/g, ' ')
+    .replace(/[.,:;!?]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 // Remove letter prefixes like "A) " from answer text

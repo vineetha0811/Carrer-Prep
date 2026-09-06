@@ -376,6 +376,8 @@ function normalize(s) {
   return String(s || '')
     .toLowerCase()
     .replace(/^\s*[A-Da-d]\s*[.):]\s*/, '')
+    .replace(/["'`«»“”‘’'-]/g, ' ')
+    .replace(/[.,:;!?]/g, ' ')
     .replace(/[.。]+$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
