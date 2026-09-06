@@ -1,0 +1,28 @@
+# Server
+node_modules/
+.env
+.env.local
+server/uploads/
+server/asr/
+server/asr-venv/
+server/prisma/dev.db*
+*.db
+
+# Client
+client/node_modules/
+client/dist/
+
+# Uploads placeholder
+uploads/*
+!uploads/.gitkeep
+server/uploads/.gitkeep
+
+# Secrets / scratch
+token.txt
+*.token
+
+# Misc
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini

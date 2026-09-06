@@ -1,0 +1,1929 @@
+BUILD A COMPLETE AI CAMPUS PLACEMENT PREPARATION WEB APPLICATION
+
+1. PRODUCT VISION
+
+Build a modern, responsive, production-quality web application called CampusReady AI.
+
+The application is designed ONLY for final-year engineering students preparing for:
+
+- Campus placements
+- Core engineering jobs
+- IT/software jobs
+- Higher studies entrance/interviews
+- General career preparation
+- Overall placement readiness
+
+Supported branches in Version 1:
+
+1. Electrical & Electronics Engineering (EEE)
+2. Computer Science Engineering (CSE)
+3. Electronics & Communication Engineering (ECE)
+4. Civil Engineering
+
+The application must not behave like a simple quiz website or question bank.
+
+It should behave like a personal AI placement coach that continuously evaluates the student, identifies weaknesses, creates daily assignments, conducts interviews, improves communication, and adapts future questions based on performance.
+
+Core philosophy
+
+DO NOT simply generate random questions.
+
+The system should follow:
+
+Student Profile → Syllabus/Materials → Assessment → Daily Preparation → Practice → Evaluation → Weakness Detection → Personalized Next Assignment → Mock Interview → Progress Tracking
+
+The ultimate goal is:
+
+«A final-year student should be able to spend approximately 30–40 minutes per day using this application and progressively become more confident and interview-ready over 1–2 months.»
+
+Do not promise job placement or guaranteed selection.
+
+---
+
+2. TARGET USER
+
+The user is always a final-year student.
+
+During onboarding collect:
+
+Personal information
+
+- Name
+- Optional profile photo
+- College name
+- Location
+- Graduation year
+
+Academic information
+
+- Branch
+- Current semester
+- CGPA/percentage
+- Backlogs, if the student voluntarily wants to mention them
+- Preferred job type
+
+Preparation goal
+
+Allow multiple selections:
+
+- Campus Placement
+- Core Job
+- IT/Software Job
+- Higher Studies
+- General Placement Preparation
+
+Also allow:
+
+“Prepare me for everything.”
+
+Current confidence
+
+Give a small mock test to  check students current level 
+- Technical knowledge
+- Aptitude
+- English
+- Speaking confidence
+- Interview confidence
+
+Use a 1–5 scale.
+
+---
+
+3. SYLLABUS UPLOAD SYSTEM
+
+This is one of the MOST IMPORTANT features.
+
+The student may upload their own syllabus/materials.
+
+Uploading must be OPTIONAL.
+
+The user should be able to continue without uploading anything.
+
+MULTIPLE FILE UPLOAD IS REQUIRED
+
+DO NOT limit the student to one file.
+
+Allow:
+
+- Multiple PDFs
+- Multiple documents
+- Multiple syllabus sheets
+- Notes/material files where technically supported
+
+Example:
+
+Student may upload:
+
+- 1st file: 3rd-year syllabus
+- 2nd file: 4th-year syllabus
+- 3rd file: elective syllabus
+- 4th file: technical notes
+- 5th file: placement preparation material
+
+Show uploaded files in a library.
+
+Each file should have:
+
+- File name
+- File type
+- Upload date
+- Processing status
+- Delete option
+- View/preview option
+
+Allow:
+
+Upload More Files
+
+at any time.
+
+---
+
+4. SYLLABUS ANALYSIS ENGINE
+
+After upload, the AI should analyze the uploaded files.
+
+DO NOT ask the AI to generate questions from the entire raw PDF blindly.
+
+First extract and structure the content.
+
+Convert:
+
+Files → Subjects → Units → Topics → Subtopics → Concepts
+
+Example for EEE:
+
+Electrical Machines
+
+→ Transformer
+
+→ Construction
+
+→ Working principle
+
+→ EMF equation
+
+→ Losses
+
+→ Efficiency
+
+→ Regulation
+
+The system should preserve the relationship between:
+
+Branch → Subject → Unit → Topic → Subtopic.
+
+The AI must prioritize content actually present in the student's uploaded syllabus.
+
+IMPORTANT:
+
+Do not randomly add unrelated advanced subjects merely because they are common in that branch.
+
+However, if the student selects Overall Placement Preparation, the application may supplement syllabus-based questions with:
+
+- Basic core concepts
+- Practical engineering knowledge
+- Aptitude
+- Reasoning
+- Communication
+- HR interview questions
+- General placement topics
+
+Clearly distinguish:
+
+“From Your Syllabus”
+
+and
+
+“Placement Supplementary Topic”
+
+---
+
+5. NO-SYLLABUS MODE
+
+If the student does not upload any syllabus:
+
+Allow them to select:
+
+EEE / CSE / ECE / Civil.
+
+Use a built-in standard topic framework for that branch.
+
+Example:
+
+EEE:
+
+- Basic Electrical Engineering
+- Electrical Machines
+- Power Systems
+- Power Electronics
+- Control Systems
+- Measurements & Instrumentation
+- Switchgear & Protection
+- Analog/Digital basics where relevant
+- Practical electrical concepts
+
+CSE:
+
+- Programming
+- Data Structures
+- Algorithms
+- DBMS
+- Operating Systems
+- Computer Networks
+- OOP
+- Software Engineering
+
+ECE:
+
+- Analog Electronics
+- Digital Electronics
+- Signals & Systems
+- Communication Systems
+- Microprocessors/Microcontrollers
+- Embedded Systems
+- Electronic Devices
+
+Civil:
+
+- Structural Engineering
+- Concrete Technology
+- Geotechnical Engineering
+- Surveying
+- Transportation Engineering
+- Environmental Engineering
+- Construction Management
+- Fluid Mechanics
+
+The built-in syllabus should act as a fallback, not replace uploaded student material when available.
+
+---
+
+6. DASHBOARD
+
+Create a clean, professional student dashboard.
+
+Display:
+
+Welcome section
+
+“Good morning, [Student Name]”
+
+Then:
+
+Your Placement Readiness: 68%
+
+Show progress visually.
+
+Today's assignment
+
+Example:
+
+DAY 17 — PLACEMENT PREPARATION
+
+Estimated time:
+
+35 minutes
+
+Sections:
+
+- Technical Challenge — 15 min
+- Aptitude & Reasoning — 8 min
+- English/Grammar — 5 min
+- Speaking Practice — 7 min
+
+Button:
+
+START TODAY'S ASSIGNMENT
+
+---
+
+7. DAILY ASSIGNMENT ENGINE
+
+This is the CORE of the application.
+
+Every day generate a personalized assignment.
+
+Do not generate identical assignments for everyone.
+
+The assignment should depend on:
+
+- Branch
+- Uploaded syllabus
+- Preparation goal
+- Previous answers
+- Accuracy
+- Weak topics
+- Difficulty history
+- Speaking performance
+- Topics already completed
+- Topics requiring revision
+- Student's available daily time
+
+The system should remember previous performance.
+
+---
+
+8. DAILY TECHNICAL QUIZ
+
+Generate approximately 8–15 technical questions depending on the daily time limit.
+
+Question types:
+
+MCQ
+
+Four options.
+
+True/False
+
+Multiple-answer questions
+
+Fill in the blank
+
+Concept identification
+
+Scenario-based questions
+
+“What would happen if...?”
+
+Assertion/Reason
+
+Interview-style short answers
+
+Numerical/application questions where relevant
+
+---
+
+9. TECHNICAL DIFFICULTY SYSTEM
+
+Do NOT ask only basic textbook questions.
+
+Use levels:
+
+Level 1 — Basic
+
+Definition and fundamental concepts.
+
+Level 2 — Conceptual
+
+Understanding why/how.
+
+Level 3 — Application
+
+Apply the concept to a real situation.
+
+Level 4 — Tricky
+
+Questions designed around common misconceptions.
+
+Level 5 — Interview Challenge
+
+Questions requiring reasoning and explanation.
+
+Level 6 — Real-world scenario
+
+Give an engineering situation and ask the student to diagnose/explain it.
+
+The system should gradually increase difficulty based on performance.
+
+---
+
+10. EXAMPLE OF QUESTION PROGRESSION
+
+For Electrical Engineering:
+
+Basic:
+
+“What is a synchronous motor?”
+
+Conceptual:
+
+“Why is a synchronous motor not self-starting?”
+
+Application:
+
+“How can a synchronous motor be started?”
+
+Tricky:
+
+“What happens if the mechanical load on a synchronous motor increases beyond the pull-out limit?”
+
+Interview challenge:
+
+“Explain to an interviewer why the average starting torque of a synchronous motor is zero at standstill.”
+
+The same principle should apply to CSE, ECE and Civil topics.
+
+---
+
+11. WRONG ANSWER HANDLING
+
+This is a CRITICAL feature.
+
+Never simply display:
+
+“Wrong answer.”
+
+When the student answers incorrectly, provide a detailed correction.
+
+Show:
+
+Your answer
+
+What the student selected/wrote.
+
+Correct answer
+
+Result
+
+Correct / Incorrect / Partially Correct.
+
+Where you went wrong
+
+Explain the exact misconception.
+
+Detailed explanation
+
+Explain the concept thoroughly enough that the student actually learns it.
+
+Why the other options are wrong
+
+For MCQs, explain each option when useful.
+
+Interview takeaway
+
+Give a short interview-ready explanation.
+
+Memory tip
+
+Give a useful conceptual memory aid, not a meaningless shortcut.
+
+Related concept
+
+Suggest one closely related concept to revise.
+
+---
+
+12. PARTIALLY CORRECT ANSWERS
+
+Do not classify everything as simply right/wrong.
+
+Allow:
+
+- Correct
+- Partially correct
+- Incorrect
+- Cannot determine
+
+For subjective answers, evaluate:
+
+- Technical correctness
+- Completeness
+- Reasoning
+- Relevance
+
+Explain what is missing.
+
+---
+
+13. “I DON'T KNOW” BUTTON
+
+Every subjective technical question should have:
+
+I DON'T KNOW
+
+If clicked:
+
+1. Explain the concept.
+2. Give a simple example.
+3. Give an interview-ready answer.
+4. Ask a simpler follow-up question.
+5. Let the student try again.
+
+This turns the platform into a learning system rather than just a test system.
+
+---
+
+14. TECHNICAL PRACTICAL KNOWLEDGE
+
+Include a dedicated practical engineering layer.
+
+Questions should not be limited to textbook theory.
+
+For EEE examples:
+
+- What is a relay?
+- Why is earthing required?
+- MCB vs MCCB
+- Why are transformers rated in kVA?
+- Why does a motor draw high starting current?
+- How do you use a multimeter?
+- What happens during a short circuit?
+- Why is power factor correction required?
+- What is a contactor?
+- What is a CT/PT?
+- How would you troubleshoot a motor that is not starting?
+
+For CSE:
+
+- Debugging scenarios
+- Database failures
+- Network troubleshooting
+- Code behavior
+- Memory issues
+- API failures
+
+For ECE:
+
+- Sensor troubleshooting
+- Signal problems
+- Circuit faults
+- Microcontroller behavior
+
+For Civil:
+
+- Site problems
+- Material selection
+- Structural situations
+- Construction defects
+- Surveying problems
+
+---
+
+15. APTITUDE & REASONING
+
+Include a separate daily section.
+
+Topics:
+
+- Percentages
+- Ratios
+- Averages
+- Profit & Loss
+- Time & Work
+- Time, Speed & Distance
+- Simple/Compound Interest
+- Probability
+- Permutations & Combinations
+- Number systems
+- Data interpretation
+- Number series
+- Logical reasoning
+- Coding-decoding
+- Blood relations
+- Directions
+- Puzzles
+- Syllogisms
+
+Difficulty should increase according to performance.
+
+Include:
+
+- Question
+- Timer
+- Options
+- Answer
+- Detailed solution
+- Faster approach where appropriate
+
+---
+
+16. ENGLISH & GRAMMAR
+
+Daily small practice section.
+
+Approximately 5–10 questions.
+
+Include:
+
+- Grammar
+- Sentence correction
+- Vocabulary
+- Fill in the blanks
+- Error identification
+- Sentence formation
+- Professional English
+- Interview vocabulary
+
+Do not make this school-exam focused.
+
+Focus on professional communication and placement interviews.
+
+---
+
+17. SPEAKING LAB — MAJOR FEATURE
+
+Create a dedicated:
+
+🎙 SPEAKING LAB
+
+This should use microphone/audio input where supported.
+
+The student speaks instead of typing.
+
+---
+
+18. TOPIC SPEAKING PRACTICE
+
+The AI gives a topic.
+
+Example:
+
+“Speak for 2 minutes about your final-year project.”
+
+Other examples:
+
+- Introduce yourself.
+- Why did you choose your branch?
+- Explain your favorite technical subject.
+- Talk about a project you completed.
+- Explain a technical concept to a non-technical person.
+- Talk about a recent engineering problem.
+- Why should we hire you?
+- Describe a challenge you faced.
+
+Provide:
+
+30 sec / 1 min / 2 min / 3 min
+
+speaking options.
+
+---
+
+19. SPEAKING ANALYSIS
+
+After the student finishes, analyze:
+
+Content
+
+Did they answer the topic?
+
+Structure
+
+Beginning → Main points → Conclusion.
+
+Fluency
+
+Pauses and flow.
+
+Grammar
+
+Vocabulary
+
+Pronunciation
+
+Filler words
+
+Examples:
+
+- um
+- uh
+- actually
+- like
+- basically
+- you know
+
+Repetition
+
+Confidence indicators
+
+Technical clarity
+
+Overall communication score
+
+Do not falsely claim to measure emotions or confidence with certainty from audio.
+
+Use careful wording such as:
+
+“Your delivery sounded hesitant in several places.”
+
+---
+
+20. HONEST SPEAKING FEEDBACK
+
+Do NOT sugarcoat.
+
+If the student is weak, clearly say so.
+
+Example:
+
+“Your technical knowledge is reasonable, but your explanation was not structured enough for an interview.”
+
+Also tell them exactly what to improve.
+
+Provide:
+
+What you did well
+
+What needs improvement
+
+Specific mistakes
+
+Better way to say it
+
+Practice recommendation
+
+Retry button
+
+---
+
+21. RETRY SPEAKING
+
+After feedback:
+
+TRY AGAIN
+
+The student can record the same answer again.
+
+Compare:
+
+Attempt 1 vs Attempt 2
+
+Show improvement.
+
+Example:
+
+Fluency:
+5.4 → 6.7
+
+Structure:
+5.0 → 7.2
+
+This encourages repeated practice.
+
+---
+
+22. AI MOCK INTERVIEW
+
+Create:
+
+🎤 MOCK INTERVIEW
+
+The AI becomes the interviewer.
+
+The student speaks naturally.
+
+AI asks:
+
+1. Tell me about yourself.
+2. Why did you choose this branch?
+3. Tell me about your project.
+4. Ask a branch-specific technical question.
+5. Ask a follow-up question based on the student's answer.
+6. Ask a practical scenario.
+7. Ask a tricky technical question.
+8. Ask an HR question.
+9. Ask a behavioral question.
+10. End the interview.
+
+IMPORTANT:
+
+The AI should NOT follow a completely fixed script.
+
+It should react to the student's answer.
+
+---
+
+23. FOLLOW-UP QUESTION ENGINE
+
+This is essential.
+
+If the student says:
+
+“I used capacitors for power factor correction.”
+
+Interviewer can ask:
+
+“Why capacitors?”
+
+Then:
+
+“What happens if you overcorrect the power factor?”
+
+Then:
+
+“How would you determine the required capacitor rating?”
+
+This creates a realistic conversation.
+
+---
+
+24. PRESSURE INTERVIEW MODE
+
+Add optional:
+
+🔥 INTERVIEW PRESSURE MODE
+
+Features:
+
+- Countdown timer
+- Limited thinking time
+- No immediate hints
+- Follow-up questions
+- Unexpected questions
+- Topic switching
+- “Why?”
+- “How?”
+- “What if?”
+- “Can you justify that?”
+
+The purpose is to simulate actual interview pressure.
+
+---
+
+25. GROUP DISCUSSION PRACTICE
+
+Create:
+
+🗣 GROUP DISCUSSION LAB
+
+The AI simulates multiple participants.
+
+Example:
+
+Topic:
+
+“Should artificial intelligence replace human jobs?”
+
+The system can simulate:
+
+- Participant A
+- Participant B
+- Participant C
+- Moderator
+
+The student speaks as one participant.
+
+The AI participants should occasionally disagree, introduce counterarguments, or challenge the student's point.
+
+---
+
+26. DEBATE MODE
+
+Allow:
+
+For / Against
+
+Example:
+
+“Should electric vehicles completely replace ICE vehicles?”
+
+The student chooses a side.
+
+AI becomes the opposing participant.
+
+The student must:
+
+- Present argument
+- Respond to counterargument
+- Defend position
+- Give evidence/reasoning
+- Conclude
+
+Evaluate:
+
+- Logic
+- Relevance
+- Confidence
+- Structure
+- Listening/response quality
+- Ability to defend an argument
+- Communication
+
+---
+
+27. ROLE-PLAY CONVERSATIONS
+
+Add practical professional conversations.
+
+Examples:
+
+Interviewer ↔ Student
+
+Team Leader ↔ Engineer
+
+HR ↔ Candidate
+
+Client ↔ Engineer
+
+Senior Engineer ↔ Fresher
+
+Group Discussion
+
+This improves conversational confidence, not just speech delivery.
+
+---
+
+28. HR INTERVIEW PREPARATION
+
+Include questions such as:
+
+- Tell me about yourself.
+- Why should we hire you?
+- What are your strengths?
+- What is your weakness?
+- Why should we select you?
+- Why this company?
+- Are you willing to relocate?
+- Are you comfortable with shifts?
+- Tell me about a failure.
+- Tell me about a difficult situation.
+- Where do you see yourself in five years?
+- Tell me about your project.
+- What did you learn from your project?
+
+Evaluate both content and communication.
+
+---
+
+29. RESUME-BASED INTERVIEW
+
+Allow the student to optionally upload their resume.
+
+Multiple document uploads should be supported.
+
+The AI can extract:
+
+- Projects
+- Skills
+- Internships
+- Certifications
+- Achievements
+- Technologies
+
+Then generate questions based on the resume.
+
+Example:
+
+If resume says:
+
+“MATLAB”
+
+Ask:
+
+“What did you actually use MATLAB for?”
+
+If resume says:
+
+“Arduino”
+
+Ask:
+
+“What communication protocols have you worked with?”
+
+The AI must avoid assuming that the student genuinely knows every skill listed.
+
+---
+
+30. PROJECT INTERVIEW MODE
+
+Student can enter/upload project information.
+
+Generate:
+
+Basic project questions
+
+Technical questions
+
+Component questions
+
+Design questions
+
+Troubleshooting questions
+
+“Why did you choose this?” questions
+
+“What was your contribution?” questions
+
+“What would you improve?” questions
+
+Failure scenario questions
+
+This is extremely important for campus interviews.
+
+---
+
+31. WEAK TOPIC DETECTION
+
+Track every question.
+
+Identify:
+
+- Frequently incorrect topics
+- Slow topics
+- Repeated misconceptions
+- Low-confidence areas
+- Speaking weaknesses
+- Aptitude weaknesses
+
+Show:
+
+⚠️ Weak Areas
+
+1. Power Electronics — 48%
+2. Probability — 52%
+3. Speaking fluency — 55%
+
+Then automatically include those topics in future assignments.
+
+---
+
+32. SPACED REVISION
+
+Do not allow a student to “finish” a topic permanently.
+
+If the student performs poorly:
+
+Repeat it sooner.
+
+If the student performs well:
+
+Bring it back later for retention.
+
+Use a simple spaced-repetition system.
+
+---
+
+33. PROGRESS DASHBOARD
+
+Track:
+
+- Daily streak
+- Questions attempted
+- Accuracy
+- Technical score
+- Aptitude score
+- Reasoning score
+- English score
+- Speaking score
+- Mock interview score
+- Topics completed
+- Weak topics
+- Improvement trend
+
+Show weekly graphs.
+
+---
+
+34. PLACEMENT READINESS SCORE
+
+Create an overall score based on multiple dimensions.
+
+Example:
+
+Technical: 30%
+
+Aptitude & Reasoning: 20%
+
+Communication: 20%
+
+Interview Performance: 20%
+
+Consistency/Practice: 10%
+
+Do not present this as a scientifically validated probability of getting a job.
+
+Label it:
+
+AI Placement Readiness Score
+
+and explain that it is an internal progress indicator.
+
+---
+
+35. 30-DAY / 45-DAY / 60-DAY PLANS
+
+Allow the student to choose:
+
+- 30 days
+- 45 days
+- 60 days
+
+The AI creates a preparation roadmap.
+
+Example:
+
+Week 1
+
+Foundation + baseline assessment
+
+Week 2
+
+Core concepts
+
+Week 3
+
+Application + tricky questions
+
+Week 4
+
+Interview questions
+
+Week 5
+
+Speaking + mock interviews
+
+Week 6
+
+Weak-area revision
+
+Final phase
+
+Full mock interviews
+
+---
+
+36. ADAPTIVE DIFFICULTY
+
+If the student repeatedly scores above 80%:
+
+Increase difficulty.
+
+If below 50%:
+
+Temporarily simplify questions and provide targeted learning.
+
+Do not punish students with harder questions after repeated failures.
+
+The goal is improvement, not frustration.
+
+---
+
+37. QUESTION QUALITY RULES
+
+AI-generated questions must:
+
+- Be technically correct.
+- Have one clearly correct answer for standard MCQs.
+- Avoid ambiguous wording.
+- Avoid unnecessary trick questions.
+- Explain the answer.
+- Match the student's branch.
+- Prefer syllabus topics when available.
+- Avoid repeating recent questions unnecessarily.
+- Include practical and conceptual questions.
+- Include common interview misconceptions.
+
+---
+
+38. DAILY SESSION FLOW
+
+Recommended default:
+
+5 min
+
+English/Grammar
+
+10–15 min
+
+Technical
+
+5–10 min
+
+Aptitude/Reasoning
+
+10 min
+
+Speaking/Interview
+
+Total:
+
+30–40 minutes
+
+Allow the student to adjust the daily duration.
+
+Options:
+
+- 20 minutes
+- 30 minutes
+- 40 minutes
+- 60 minutes
+
+---
+
+39. “QUICK PRACTICE” MODE
+
+If the student has only 10 minutes:
+
+Generate a mini session.
+
+Example:
+
+- 3 Technical
+- 3 Aptitude
+- 1 Speaking
+- 1 Interview question
+
+This prevents students from losing their daily streak.
+
+---
+
+40. NOT JUST DAILY — CONTINUOUS PREPARATION
+
+The app must not reset every day.
+
+Maintain a long-term learning profile.
+
+Remember:
+
+- Previous scores
+- Wrong answers
+- Weak topics
+- Strong topics
+- Questions already seen
+- Speaking feedback
+- Mock interview history
+- Completed syllabus topics
+
+Every new assignment should use this history.
+
+---
+
+41. “LEARN THIS TOPIC” MODE
+
+When a student struggles with a topic:
+
+Button:
+
+LEARN THIS
+
+AI provides:
+
+1. Simple explanation
+2. Detailed explanation
+3. Real-world example
+4. Common interview question
+5. Common mistake
+6. Quick self-test
+
+Then return the student to practice.
+
+---
+
+42. INTERVIEW ANSWER BUILDER
+
+For questions such as:
+
+“Tell me about yourself.”
+
+The AI should NOT simply give a memorized paragraph.
+
+Teach the student a structure.
+
+Example:
+
+Present → Education → Skills → Project → Strength → Career goal.
+
+Then let the student create their own answer.
+
+Evaluate their actual response.
+
+---
+
+43. COMPANY PREPARATION — FUTURE-READY
+
+Architecture should support future company-specific modules.
+
+Examples:
+
+- Core Electrical companies
+- IT service companies
+- Product companies
+- Construction companies
+- Electronics companies
+
+Do not hard-code company-specific claims unless supported by reliable current information.
+
+---
+
+44. NOTIFICATION / REMINDER
+
+Optional daily reminder:
+
+“Your Day 18 placement assignment is ready.”
+
+Allow student to disable notifications.
+
+---
+
+45. STREAK SYSTEM
+
+Show:
+
+🔥 7-day streak
+
+But don't make the application overly gamified.
+
+Reward consistency with:
+
+- Streaks
+- Milestones
+- Completion badges
+
+Examples:
+
+First Mock Interview
+
+7-Day Learner
+
+100 Questions Completed
+
+Speaking Week Completed
+
+---
+
+46. STUDENT PERFORMANCE REPORT
+
+Generate weekly reports.
+
+Example:
+
+WEEK 2 REPORT
+
+Technical:
+72%
+
+Aptitude:
+68%
+
+Speaking:
+57%
+
+Interview:
+61%
+
+Improvement
+
+Technical +12%
+
+Speaking +8%
+
+Biggest weakness
+
+Explaining technical concepts verbally.
+
+Next week's focus
+
+Electrical Machines + Speaking + Reasoning.
+
+---
+
+47. FINAL MOCK PLACEMENT DAY
+
+Create:
+
+PLACEMENT DAY MODE
+
+Simulate a complete placement process:
+
+Round 1
+
+Aptitude
+
+Round 2
+
+Technical
+
+Round 3
+
+Communication
+
+Round 4
+
+HR
+
+Round 5
+
+Final Interview
+
+At the end provide:
+
+Placement Readiness Report
+
+with strengths, weaknesses and recommendations.
+
+---
+
+48. UI/UX REQUIREMENTS
+
+The interface should feel:
+
+- Professional
+- Modern
+- Clean
+- Student-friendly
+- Not childish
+- Not overloaded
+- Mobile responsive
+- Desktop responsive
+
+Use a dashboard design similar to modern education/productivity platforms.
+
+Important:
+
+Do not put too many cards on one screen.
+
+Prioritize:
+
+Today's Assignment
+
+Progress
+
+Continue Preparation
+
+---
+
+49. MAIN NAVIGATION
+
+Use:
+
+Dashboard
+
+Daily Assignment
+
+Technical
+
+Aptitude
+
+Speaking Lab
+
+Mock Interview
+
+Group Discussion
+
+My Syllabus
+
+My Resume
+
+My Projects
+
+Progress
+
+Settings
+
+---
+
+50. ACCESSIBILITY
+
+Support:
+
+- Keyboard navigation
+- Readable fonts
+- Good contrast
+- Responsive layouts
+- Clear error messages
+- Microphone permission explanation
+- File upload status
+- Loading indicators
+
+---
+
+51. FILE PROCESSING UX
+
+When uploading:
+
+Show:
+
+Uploading → Processing → Analyzing → Structuring → Ready
+
+Never make the student wonder whether the file is being processed.
+
+If a file fails:
+
+Show the actual reason and allow retry.
+
+---
+
+52. SECURITY & PRIVACY
+
+Student files may contain personal information.
+
+Implement:
+
+- Authentication
+- Secure file storage
+- Access control
+- Private user data
+- No exposure of one student's syllabus/resume to another
+- Delete file option
+- Delete account option
+
+Do not expose uploaded documents publicly.
+
+---
+
+53. AI ARCHITECTURE
+
+Separate AI responsibilities into modules:
+
+Module 1
+
+Syllabus analyzer
+
+Module 2
+
+Question generator
+
+Module 3
+
+Answer evaluator
+
+Module 4
+
+Explanation generator
+
+Module 5
+
+Adaptive difficulty engine
+
+Module 6
+
+Speaking evaluator
+
+Module 7
+
+Interview simulator
+
+Module 8
+
+GD/debate simulator
+
+Module 9
+
+Weakness detector
+
+Module 10
+
+Study-plan generator
+
+This modular architecture should make the system easier to improve.
+
+---
+
+54. DATABASE STRUCTURE
+
+Create suitable database models/tables for:
+
+Users
+
+Profiles
+
+Branches
+
+SyllabusFiles
+
+Subjects
+
+Topics
+
+Subtopics
+
+Questions
+
+QuestionAttempts
+
+Answers
+
+Explanations
+
+WeakTopics
+
+DailyAssignments
+
+DailyProgress
+
+SpeakingSessions
+
+SpeakingAttempts
+
+MockInterviews
+
+InterviewMessages
+
+GD Sessions
+
+Debate Sessions
+
+Resumes
+
+Projects
+
+StudyPlans
+
+Achievements
+
+Settings
+
+---
+
+55. PERSONALIZATION LOGIC
+
+The question engine should consider:
+
+Branch + Syllabus + Goal + Performance + Weakness + Difficulty + Revision schedule + Previous questions
+
+before selecting the next question.
+
+This is the core intelligence of the platform.
+
+---
+
+56. IMPORTANT: AVOID RANDOM AI BEHAVIOR
+
+The application must not simply call an LLM and display whatever it returns.
+
+Create structured AI outputs.
+
+For questions, use structured fields such as:
+
+- Question
+- Question type
+- Difficulty
+- Subject
+- Topic
+- Source
+- Options
+- Correct answer
+- Explanation
+- Common misconception
+- Interview takeaway
+
+For evaluations:
+
+- Score
+- Correctness
+- Missing concepts
+- Mistakes
+- Feedback
+- Suggested revision
+
+---
+
+57. SOURCE LABELING
+
+Every generated question should internally know whether it came from:
+
+Uploaded Syllabus
+
+or
+
+Built-in Branch Curriculum
+
+or
+
+Placement Supplement
+
+Display this when useful.
+
+---
+
+58. FINAL PRODUCT EXPERIENCE
+
+A student should be able to open the app and understand immediately:
+
+“What should I do today?”
+
+The answer should always be visible.
+
+For example:
+
+«DAY 21
+
+Today you need to complete:
+
+⚡ 10 Technical Questions
+🧠 8 Aptitude Questions
+📖 5 English Questions
+🎙️ 1 Speaking Challenge
+🎤 1 Mini Interview
+
+Estimated time: 35 minutes
+
+[ START ]»
+
+---
+
+59. CORE USER JOURNEY
+
+STEP 1
+
+Student signs up.
+
+STEP 2
+
+Selects branch:
+EEE / CSE / ECE / Civil.
+
+STEP 3
+
+Confirms final-year status.
+
+STEP 4
+
+Selects goal.
+
+STEP 5
+
+Uploads one or MANY syllabus/material files OR skips upload.
+
+STEP 6
+
+AI analyzes available academic information.
+
+STEP 7
+
+Initial baseline assessment.
+
+STEP 8
+
+AI creates personalized preparation plan.
+
+STEP 9
+
+Student completes daily assignment.
+
+STEP 10
+
+AI evaluates every response.
+
+STEP 11
+
+AI detects weak areas.
+
+STEP 12
+
+Future assignments adapt.
+
+STEP 13
+
+Student practices speaking.
+
+STEP 14
+
+Student performs mock interviews/GD/debates.
+
+STEP 15
+
+Weekly performance reports.
+
+STEP 16
+
+Final placement simulation.
+
+---
+
+60. DESIGN THE PRODUCT AROUND ONE MAIN PROMISE
+
+The entire application should communicate one simple idea:
+
+«“Spend 30–40 minutes every day. Know what to prepare, practice it, speak it, get corrected, and become interview-ready.”»
+
+Do not make the application feel like a giant online course.
+
+It is an AI-driven daily placement training coach.
+
+---
+
+61. MVP PRIORITY
+
+If the entire system cannot be built at once, implement in this order:
+
+PRIORITY 1
+
+Authentication + student profile
+
+PRIORITY 2
+
+Multiple syllabus upload
+
+PRIORITY 3
+
+Syllabus analysis
+
+PRIORITY 4
+
+Daily technical questions
+
+PRIORITY 5
+
+Detailed answer evaluation
+
+PRIORITY 6
+
+Aptitude/reasoning
+
+PRIORITY 7
+
+Speaking practice
+
+PRIORITY 8
+
+Mock interview
+
+PRIORITY 9
+
+Progress tracking
+
+PRIORITY 10
+
+GD/debate
+
+PRIORITY 11
+
+Resume/project-based interview
+
+PRIORITY 12
+
+Advanced adaptive learning
+
+---
+
+62. IMPORTANT DEVELOPMENT RULE
+
+Do not create fake functionality.
+
+If speech analysis, file processing, AI evaluation, database storage, authentication, or any other feature requires a backend/API/service, actually connect it properly.
+
+Do not create buttons that only display:
+
+“Coming soon.”
+
+Build the functional version wherever possible.
+
+---
+
+63. FINAL QUALITY REQUIREMENT
+
+Before considering the application complete, test the following scenarios:
+
+Scenario A
+
+EEE student uploads 3 syllabus PDFs.
+
+Scenario B
+
+CSE student uploads no syllabus.
+
+Scenario C
+
+Student uploads multiple files one after another.
+
+Scenario D
+
+Student gives a wrong technical answer.
+
+Scenario E
+
+Student gives a partially correct answer.
+
+Scenario F
+
+Student performs poorly repeatedly in one topic.
+
+Scenario G
+
+Student improves in that topic.
+
+Scenario H
+
+Student completes speaking practice twice.
+
+Scenario I
+
+Student performs a mock interview.
+
+Scenario J
+
+Student joins a GD/debate.
+
+Scenario K
+
+Student returns the next day.
+
+The system must remember their progress and generate a new personalized assignment.
+
+---
+
+FINAL PRODUCT DEFINITION
+
+Build CampusReady AI as a personalized AI placement preparation platform exclusively for final-year engineering students from:
+
+EEE + CSE + ECE + Civil.
+
+The platform should transform a student's syllabus, materials, resume and project information into a personalized preparation system.
+
+It should combine:
+
+Technical Knowledge + Practical Knowledge + Aptitude + Reasoning + English + Speaking + Interview Skills + Group Discussion + Debate + HR Preparation + Adaptive Learning + Progress Tracking.
+
+The application must continuously answer one question for the student:
+
+«“What should I practice today to become more ready for my placement interview?”»
+
+The system should not merely test students.
+
+It should:
+
+Teach → Ask → Listen → Evaluate → Correct → Explain → Challenge → Track → Adapt → Repeat.
+
+The final experience should feel like having a personal AI placement coach available every day.

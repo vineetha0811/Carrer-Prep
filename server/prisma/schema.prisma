@@ -1,0 +1,376 @@
+// CampusReady AI - Database Schema
+// SQLite for V1 (single-user friendly, portable). Swappable to Postgres by changing provider.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------- USER & PROFILE ----------------
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profile         Profile?
+  syllabusFiles   SyllabusFile[]
+  resumes         Resume[]
+  projects        Project[]
+  questionAttempts QuestionAttempt[]
+  dailyAssignments DailyAssignment[]
+  dailyProgress   DailyProgress[]
+  speakingSessions SpeakingSession[]
+  mockInterviews  MockInterview[]
+  gdSessions      GdSession[]
+  studyPlans      StudyPlan[]
+  achievements    Achievement[]
+  settings        Settings?
+  weakTopics      WeakTopic[]
+}
+
+model Profile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college        String?
+  location       String?
+  graduationYear Int?
+  branch         String?          // EEE | CSE | ECE | CIVIL
+  semester       Int?
+  cgpa           Float?
+  backlogs       Int?
+  preferredJob   String?
+  goals          String           @default("[]") // JSON array of goal keys
+  profilePhoto   String?
+  confidence     String           @default("{}") // JSON 1-5 confidence scores
+  planLengthDays Int?             // 30 / 45 / 60
+  dailyMinutes   Int              @default(30)
+  onboardingDone Boolean          @default(false)
+  baselineTaken  Boolean          @default(false)
+  startDate      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  subjectStructures SubjectStructure[]
+}
+
+// ---------------- SYLLABUS / TOPIC STRUCTURE ----------------
+
+model Branch {
+  id     String  @id @default(cuid())
+  code   String  @unique // EEE | CSE | ECE | CIVIL
+  name   String
+  subjects Subject[]
+}
+
+model SyllabusFile {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fileName  String
+  storedPath String
+  mimeType  String
+  size      Int
+  status    String   @default("uploading") // uploading | processing | analyzing | structuring | ready | failed
+  errorMsg  String?
+  sourceText String?           // extracted raw text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subjects SubjectStructure[]
+  analyzedKeywords String @default("[]")
+}
+
+model Subject {
+  id       String  @id @default(cuid())
+  branchId String
+  branch   Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  name     String
+  units    Unit[]
+  topics   Topic[]
+  source   String  @default("builtin") // builtin | uploaded | supplement
+}
+
+model Unit {
+  id        String  @id @default(cuid())
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  name      String
+  topics    Topic[]
+}
+
+model Topic {
+  id       String  @id @default(cuid())
+  unitId   String?
+  unit     Unit?   @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  subjectId String
+  subject  Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  name     String
+  subtopics Subtopic[]
+}
+
+model Subtopic {
+  id      String @id @default(cuid())
+  topicId String
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  name    String
+}
+
+// Subject structure extracted from uploaded syllabus files (per user)
+model SubjectStructure {
+  id           String   @id @default(cuid())
+  profileId    String
+  profile      Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  syllabusFileId String?
+  syllabusFile SyllabusFile? @relation(fields: [syllabusFileId], references: [id], onDelete: SetNull)
+  name         String
+  source       String   @default("uploaded") // uploaded | builtin | supplement
+  subjectUnits String   @default("[]") // JSON: [{name, topics:[{name, subtopics:[...]}]}]
+  createdAt    DateTime @default(now())
+}
+
+// ---------------- QUESTIONS ----------------
+
+model Question {
+  id          String   @id @default(cuid())
+  branch      String
+  subject     String
+  topic       String
+  difficulty  Int      @default(2) // 1-6
+  qtype       String   @default("mcq") // mcq | truefalse | multi | fillblank | short | numerical | scenario | assertion
+  text        String  
+  options     String   @default("[]") // JSON array
+  correctAnswer String
+  explanation String  
+  misconception String?
+  interviewTakeaway String?
+  memoryTip   String?
+  relatedConcept String?
+  source      String   @default("builtin") // syllabus | builtin | supplement
+  isPractical Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  attempts QuestionAttempt[]
+}
+
+model QuestionAttempt {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId       String?
+  question         Question? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+  category         String   // technical | aptitude | english
+  subject          String?
+  topic            String
+  difficulty       Int
+  questionKey      String?  // stable identity of the bank question (avoids repeats)
+  userAnswer       String? 
+  correctness      String   // correct | partial | incorrect | dontknow
+  score            Float
+  isCorrect        Boolean
+  evaluatedAt      DateTime @default(now())
+
+  @@index([userId, topic])
+  @@index([userId, category])
+  @@index([userId, category, questionKey])
+}
+
+// ---------------- DAILY ASSIGNMENT ----------------
+
+model DailyAssignment {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dayNumber  Int
+  date       DateTime @default(now())
+  sections   String   @default("[]") // JSON array of section definitions
+  status     String   @default("pending") // pending | in_progress | completed
+  startedAt  DateTime?
+  completedAt DateTime?
+  score      Float?
+  estimatedMinutes Int @default(30)
+
+  @@unique([userId, date])
+}
+
+model DailyProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  techCorrect Int    @default(0)
+  techTotal Int       @default(0)
+  aptCorrect Int      @default(0)
+  aptTotal  Int       @default(0)
+  engCorrect Int      @default(0)
+  engTotal  Int       @default(0)
+  speakingDone Boolean @default(false)
+  interviewDone Boolean @default(false)
+  completed Boolean   @default(false)
+
+  @@unique([userId, date])
+}
+
+// ---------------- SPEAKING ----------------
+
+model SpeakingSession {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic     String
+  durationSec Int    @default(60)
+  kind      String   @default("topic") // topic | interview | gd | debate | roleplay
+  createdAt DateTime @default(now())
+
+  attempts SpeakingAttempt[]
+}
+
+model SpeakingAttempt {
+  id           String   @id @default(cuid())
+  sessionId    String
+  session      SpeakingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  attemptNo    Int      @default(1)
+  transcript   String? 
+  evaluation   String   @default("{}") // JSON evaluation
+  fluency      Float?
+  structure    Float?
+  gramScore    Float?
+  vocabScore   Float?
+  contentScore Float?
+  overall      Float?
+  createdAt    DateTime @default(now())
+}
+
+// ---------------- INTERVIEW ----------------
+
+model MockInterview {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   @default("general") // general | resume | project | pressure | hr
+  status    String   @default("in_progress") // in_progress | completed
+  score     Float?
+  summary   String? 
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+
+  messages InterviewMessage[]
+}
+
+model InterviewMessage {
+  id          String   @id @default(cuid())
+  interviewId String
+  interview   MockInterview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  role        String   // ai | student
+  content     String  
+  evaluation  String? 
+  createdAt   DateTime @default(now())
+}
+
+// ---------------- GD / DEBATE ----------------
+
+model GdSession {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic     String
+  kind      String   @default("gd") // gd | debate
+  side      String?  // for debate: for | against
+  status    String   @default("in_progress")
+  summary   String? 
+  createdAt DateTime @default(now())
+
+  messages GdMessage[]
+}
+
+model GdMessage {
+  id        String   @id @default(cuid())
+  sessionId String
+  session   GdSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  speaker   String   // moderator | participant_a | participant_b | participant_c | student
+  content   String  
+  evaluation String?
+  createdAt DateTime @default(now())
+}
+
+// ---------------- RESUME / PROJECT ----------------
+
+model Resume {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fileName  String
+  storedPath String
+  mimeType  String
+  size      Int
+  status    String   @default("processing")
+  extracted String? 
+  skills    String   @default("[]")
+  projects  String   @default("[]")
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?  
+  technologies String  @default("[]")
+  role        String?
+  link        String?
+  createdAt   DateTime @default(now())
+}
+
+// ---------------- STUDY PLAN / ACHIEVEMENTS / SETTINGS ----------------
+
+model StudyPlan {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lengthDays Int
+  roadmap   String   @default("[]") // JSON array of weekly/phase plans
+  createdAt DateTime @default(now())
+}
+
+model Achievement {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key       String
+  label     String
+  earnedAt  DateTime @default(now())
+
+  @@unique([userId, key])
+}
+
+model WeakTopic {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category  String   // technical | aptitude | english | speaking
+  topic     String
+  accuracy  Float
+  attempts  Int
+  lastSeen  DateTime @default(now())
+
+  @@unique([userId, category, topic])
+}
+
+model Settings {
+  id             String  @id @default(cuid())
+  userId         String  @unique
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dailyMinutes   Int     @default(30)
+  notifications  Boolean @default(true)
+  dailyTime      String  @default("30")
+  updatedAt      DateTime @updatedAt
+}
