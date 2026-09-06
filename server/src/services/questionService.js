@@ -92,6 +92,44 @@ const DIFFICULTY_WEIGHTS = {
   hard: { 1: 0.05, 2: 0.15, 3: 0.25, 4: 0.25, 5: 0.2, 6: 0.1 },
 };
 
+// Normalize an option label so different letter prefixes compare equal.
+function normOption(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/^\s*[a-d]\s*[.):]\s*/, '')
+    .replace(/^option\s*[a-d]\s*[):]?\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Give every question 6 plausible options and shuffle their order with a seed
+// derived from the user + question, so the correct answer is never stuck in the
+// first position and each student sees a different arrangement. Grading is
+// text-based (not position-based), so reshuffling is always safe.
+const TARGET_OPTIONS = 6;
+export function finalizeOptions(q, pool, seedText) {
+  if (!q || !Array.isArray(q.options) || q.options.length === 0) return q;
+
+  const isMcq = (q.qtype || 'mcq') === 'mcq';
+  const options = q.options.slice();
+
+  if (isMcq && options.length < TARGET_OPTIONS) {
+    const correctNorm = normOption(q.correctAnswer);
+    const taken = new Set(options.map(normOption));
+    const cand = (pool || []).flatMap((p) => (Array.isArray(p.options) ? p.options : []));
+    for (const o of cand) {
+      if (options.length >= TARGET_OPTIONS) break;
+      const n = normOption(o);
+      if (!n || n === correctNorm || taken.has(n)) continue;
+      taken.add(n);
+      options.push(o);
+    }
+  }
+
+  const rng = mulberry32(hashString(seedText));
+  return { ...q, options: shuffleWithRng(options, rng) };
+}
+
 function accuracyToDifficultyMode(accuracy) {
   if (accuracy >= 0.8) return 'hard';
   if (accuracy <= 0.5) return 'easy';
@@ -199,15 +237,16 @@ export async function selectTechnicalQuestions({ userId, branch, count = 10, wea
   picks = shuffleWithRng(picks, rng);
 
   // Optionally enrich with LLM when enabled (fall back gracefully to bank)
+  let result = picks.slice(0, count);
   try {
     if (aiEnabled()) {
       const enriched = await enrichQuestionsWithAI(picks, branch, weakTopics);
-      if (enriched) return enriched;
+      if (enriched) result = enriched;
     }
   } catch (e) {
     // ignore, fall back to bank
   }
-  return picks.slice(0, count);
+  return result.map((q) => finalizeOptions(q, bank, `${userId}::opts::${makeQuestionKey(q)}`));
 }
 
 async function enrichQuestionsWithAI(questions, branch, weakTopics) {
@@ -236,14 +275,18 @@ export async function selectAptitudeQuestions({ userId, count = 8, seed = null }
   const diffWeights = DIFFICULTY_WEIGHTS[accuracyToDifficultyMode(await recentAccuracyOf(userId))];
   const rng = (typeof seed === 'number' || typeof seed === 'string') ? mulberry32(typeof seed === 'string' ? hashString(seed) : seed) : Math.random;
   const picks = await unseenFirst(userId, 'aptitude', dedupe(aptitude), count, rng, diffWeights);
-  return picks.map(q => ({ ...q, category: 'aptitude' }));
+  return picks
+    .map((q) => finalizeOptions(q, aptitude, `${userId}::opts::${makeQuestionKey(q)}`))
+    .map(q => ({ ...q, category: 'aptitude' }));
 }
 
 export async function selectEnglishQuestions({ userId, count = 6, seed = null }) {
   const { default: english } = await import('../data/banks/english.js');
   const rng = (typeof seed === 'number' || typeof seed === 'string') ? mulberry32(typeof seed === 'string' ? hashString(seed) : seed) : Math.random;
   const picks = await unseenFirst(userId, 'english', dedupe(english), count, rng, null);
-  return picks.map(q => ({ ...q, category: 'english' }));
+  return picks
+    .map((q) => finalizeOptions(q, english, `${userId}::opts::${makeQuestionKey(q)}`))
+    .map(q => ({ ...q, category: 'english' }));
 }
 
 // Baseline assessment: 5 technical + 3 aptitude + 2 english, unseen-first and
@@ -269,8 +312,8 @@ export async function buildBaselineAssessment(branch, userId = null) {
   };
 
   return {
-    technical: pickAny('technical', bank, 5).map(q => ({ ...q, category: 'technical' })),
-    aptitude: pickAny('aptitude', aptitude, 3).map(q => ({ ...q, category: 'aptitude' })),
-    english: pickAny('english', english, 2).map(q => ({ ...q, category: 'english' })),
+    technical: pickAny('technical', bank, 5).map(q => finalizeOptions(q, bank, `${userId || 'anon'}::baseline::${makeQuestionKey(q)}`)).map(q => ({ ...q, category: 'technical' })),
+    aptitude: pickAny('aptitude', aptitude, 3).map(q => finalizeOptions(q, aptitude, `${userId || 'anon'}::baseline::${makeQuestionKey(q)}`)).map(q => ({ ...q, category: 'aptitude' })),
+    english: pickAny('english', english, 2).map(q => finalizeOptions(q, english, `${userId || 'anon'}::baseline::${makeQuestionKey(q)}`)).map(q => ({ ...q, category: 'english' })),
   };
 }
