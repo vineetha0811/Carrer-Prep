@@ -498,17 +498,18 @@ function BaselineQuestion({ q, onAnswer, isLast, saving }) {
 }
 
 function BaselineReviewItem({ review, index }) {
-  const wrong = !review.isCorrect;
+  const selfAssessed = review.correctness === 'self';
   const skipped = review.correctness === 'skip';
+  const wrong = !review.isCorrect && !selfAssessed;
   return (
     <div className="card p-4">
       <div className="flex items-start gap-3">
         <span
           className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${
-            wrong ? 'bg-red-500' : 'bg-emerald-500'
+            selfAssessed ? 'bg-amber-400' : skipped ? 'bg-slate-300' : wrong ? 'bg-red-500' : 'bg-emerald-500'
           }`}
         >
-          {wrong ? '✕' : '✓'}
+          {selfAssessed ? '~' : skipped ? '–' : wrong ? '✕' : '✓'}
         </span>
         <div className="min-w-0 flex-1 space-y-2">
           <p className="text-sm font-semibold leading-relaxed text-slate-900">
@@ -518,10 +519,17 @@ function BaselineReviewItem({ review, index }) {
           {review.difficulty && <span className="chip bg-slate-100 text-slate-500">Level {review.difficulty}</span>}
 
           <div className="space-y-1.5 text-sm">
-            <p className="text-slate-700">
-              <span className="font-semibold text-slate-500">Your answer: </span>
-              {skipped ? <span className="italic text-slate-400">skipped</span> : <span className={wrong ? 'text-red-600' : 'text-emerald-700'}>{review.userAnswer}</span>}
-            </p>
+            {selfAssessed ? (
+              <p className="text-slate-500">
+                <span className="font-semibold text-slate-400">Your answer (self-assessed): </span>
+                <span className="text-slate-700">{review.userAnswer}</span>
+              </p>
+            ) : (
+              <p className="text-slate-700">
+                <span className="font-semibold text-slate-500">Your answer: </span>
+                {skipped ? <span className="italic text-slate-400">skipped</span> : <span className={wrong ? 'text-red-600' : 'text-emerald-700'}>{review.userAnswer}</span>}
+              </p>
+            )}
             {wrong && review.correctAnswer && (
               <p className="text-slate-700">
                 <span className="font-semibold text-slate-500">Correct answer: </span>
