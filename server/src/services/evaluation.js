@@ -159,11 +159,30 @@ export async function evaluateSubjective(question, userAnswer) {
   const wordCount = answer.split(/\s+/).filter(Boolean).length;
   let lengthScore = Math.min(1, wordCount / 40);
 
-  // presence of core answer keywords
-  const core = stripMCQPrefix(question.correctAnswer).toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 3);
+  // presence of the main answer keywords (punctuation is ignored; substrings
+  // like "osi model" or "packet" count as hits)
+  const stopWords = new Set(['the','a','an','and','or','of','to','in','for','is','are','was','were','be','that','this','it','on','with','by','as','at','from','its','their','which','will','can','used']);
+  const core = stripMCQPrefix(question.correctAnswer).toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !stopWords.has(w));
   let coreHits = 0;
   for (const c of core) if (answer.toLowerCase().includes(c)) coreHits += 1;
   const coreScore = core.length ? coreHits / core.length : 0;
+
+  // If the student covered the main keywords, that is enough to be correct -
+  // long answers are graded on substance, not on matching every letter.
+  if (core.length && coreScore >= 0.8) {
+    const mistakes = [];
+    if (wordCount < 20) mistakes.push('The answer is quite short; an interview answer should explain the reasoning, not just state a result.');
+    const feedback = 'Good answer - the key terms are right. Practice saying it out loud to make it interview-ready.';
+    return {
+      score: Math.max(80, Math.round((overlap * 0.4 + lengthScore * 0.15 + coreScore * 0.45) * 100)),
+      correctness: 'correct',
+      missingConcepts: [],
+      mistakes,
+      feedback,
+      betterAnswer: buildBetterAnswer(question),
+      suggestedRevision: question.relatedConcept || question.topic,
+    };
+  }
 
   const score = Math.round(Math.max(0, Math.min(1, overlap * 0.5 + lengthScore * 0.2 + coreScore * 0.3)) * 100);
 
