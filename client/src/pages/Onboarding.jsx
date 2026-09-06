@@ -375,7 +375,7 @@ function Field({ label, children, className = '' }) {
 function normalize(s) {
   return String(s || '')
     .toLowerCase()
-    .replace(/^\s*[A-D]\s*[.):]\s*/, '')
+    .replace(/^\s*[A-Da-d]\s*[.):]\s*/, '')
     .replace(/[.。]+$/g, '')
     .replace(/\s+/g, ' ')
     .trim();

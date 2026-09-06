@@ -33,7 +33,7 @@ const uploadPhoto = multer({ storage: photoStorage, limits: { fileSize: 5 * 1024
 function normalizeBaseline(s) {
   return String(s || '')
     .toLowerCase()
-    .replace(/^\s*[A-D]\s*[.):]\s*/, '')
+    .replace(/^\s*[A-Da-d]\s*[.):]\s*/, '')
     .replace(/[.。]+$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
